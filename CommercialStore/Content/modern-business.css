@@ -1,0 +1,68 @@
+/*!
+ * Start Bootstrap - Modern Business (https://startbootstrap.com/templates/modern-business)
+ * Copyright 2013-2020 Start Bootstrap
+ * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-logomodern-business-nav/blob/master/LICENSE)
+ */
+body {
+  padding-top: 56px;
+}
+
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.portfolio-item {
+  margin-bottom: 30px;
+}
+
+
+.card-img, .card-img-bottom, .card-img-top{
+    max-height:200px;
+}
+
+
+header.masthead {
+    padding-top: 10rem;
+    padding-bottom: calc(10rem - 4.5rem);
+    background: /*linear-gradient(to bottom, rgba(92, 77, 66, 0.8) 0%, rgba(92, 77, 66, 0.8) 100%),*/ url("../Content/Images/brooke-lark-pGM4sjt_BdQ-unsplash.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+}
+
+    header.masthead h1 {
+        font-size: 2.25rem;
+    }
+
+@media (min-width: 992px) {
+    header.masthead {
+        height: 100vh;
+        min-height: 40rem;
+        padding-top: 4.5rem;
+        padding-bottom: 0;
+    }
+
+        header.masthead p {
+            font-size: 1.15rem;
+        }
+
+        header.masthead h1 {
+            font-size: 3rem;
+        }
+}
+@media (min-width: 1200px) {
+    header.masthead h1 {
+        font-size: 3.5rem;
+    }
+}
+
+.h-100 {
+    height: 100% !important;
+}

@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OnlineStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ProductCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActivated" Type="bit" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LastUpdatedAt" Type="datetime" />
+          <Property Name="LastUpdatedByUserId" Type="uniqueidentifier" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" />
+          <Property Name="Subtitle" Type="nvarchar" MaxLength="255" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="AdditionInfo" Type="nvarchar(max)" />
+          <Property Name="FinePrintInfo" Type="nvarchar(max)" />
+          <Property Name="ProductCategoryId" Type="int" />
+          <Property Name="ProductSubCategoryId" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DiscountedPrice" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="DiscountRate" Type="int" />
+          <Property Name="AvailableQuantity" Type="int" />
+          <Property Name="IsActivated" Type="bit" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LastUpdatedAt" Type="datetime" />
+          <Property Name="LastUpdatedByUser" Type="uniqueidentifier" />
+          <Property Name="TotalBought" Type="int" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="IsPublished" Type="bit" Nullable="false" />
+          <Property Name="ImageFolderUrl" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ProductSubCategories">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="IsActivated" Type="bit" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="LastUpdatedAt" Type="datetime" />
+          <Property Name="LastUpdatedByUserId" Type="uniqueidentifier" />
+        </EntityType>
+        <Association Name="FK_Products_ProductCategories">
+          <End Role="ProductCategories" Type="Self.ProductCategories" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ProductCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductSubCategories">
+          <End Role="ProductSubCategories" Type="Self.ProductSubCategories" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSubCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ProductSubCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSubCategories_ProductCategories">
+          <End Role="ProductCategories" Type="Self.ProductCategories" Multiplicity="1" />
+          <End Role="ProductSubCategories" Type="Self.ProductSubCategories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductSubCategories">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OnlineStoreModelStoreContainer">
+          <EntitySet Name="ProductCategories" EntityType="Self.ProductCategories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSubCategories" EntityType="Self.ProductSubCategories" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Products_ProductCategories" Association="Self.FK_Products_ProductCategories">
+            <End Role="ProductCategories" EntitySet="ProductCategories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductSubCategories" Association="Self.FK_Products_ProductSubCategories">
+            <End Role="ProductSubCategories" EntitySet="ProductSubCategories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSubCategories_ProductCategories" Association="Self.FK_ProductSubCategories_ProductCategories">
+            <End Role="ProductCategories" EntitySet="ProductCategories" />
+            <End Role="ProductSubCategories" EntitySet="ProductSubCategories" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OnlineStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsActivated" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <Property Name="LastUpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedByUserId" Type="Guid" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_ProductCategories" FromRole="ProductCategories" ToRole="Products" />
+          <NavigationProperty Name="ProductSubCategories" Relationship="Self.FK_ProductSubCategories_ProductCategories" FromRole="ProductCategories" ToRole="ProductSubCategories" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Subtitle" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AdditionInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FinePrintInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProductCategoryId" Type="Int32" />
+          <Property Name="ProductSubCategoryId" Type="Int32" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DiscountedPrice" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="DiscountRate" Type="Int32" />
+          <Property Name="AvailableQuantity" Type="Int32" />
+          <Property Name="IsActivated" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <Property Name="LastUpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedByUser" Type="Guid" />
+          <Property Name="TotalBought" Type="Int32" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsPublished" Type="Boolean" Nullable="false" />
+          <Property Name="ImageFolderUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductCategory" Relationship="Self.FK_Products_ProductCategories" FromRole="Products" ToRole="ProductCategories" />
+          <NavigationProperty Name="ProductSubCategory" Relationship="Self.FK_Products_ProductSubCategories" FromRole="Products" ToRole="ProductSubCategories" />
+        </EntityType>
+        <EntityType Name="ProductSubCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="IsActivated" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Guid" Nullable="false" />
+          <Property Name="LastUpdatedAt" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedByUserId" Type="Guid" />
+          <NavigationProperty Name="ProductCategory" Relationship="Self.FK_ProductSubCategories_ProductCategories" FromRole="ProductSubCategories" ToRole="ProductCategories" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_ProductSubCategories" FromRole="ProductSubCategories" ToRole="Products" />
+        </EntityType>
+        <Association Name="FK_Products_ProductCategories">
+          <End Role="ProductCategories" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ProductCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSubCategories_ProductCategories">
+          <End Role="ProductCategories" Type="Self.ProductCategory" Multiplicity="1" />
+          <End Role="ProductSubCategories" Type="Self.ProductSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductSubCategories">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductSubCategories">
+          <End Role="ProductSubCategories" Type="Self.ProductSubCategory" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSubCategories">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="ProductSubCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ProductCategories" EntityType="Self.ProductCategory" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductSubCategories" EntityType="Self.ProductSubCategory" />
+          <AssociationSet Name="FK_Products_ProductCategories" Association="Self.FK_Products_ProductCategories">
+            <End Role="ProductCategories" EntitySet="ProductCategories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSubCategories_ProductCategories" Association="Self.FK_ProductSubCategories_ProductCategories">
+            <End Role="ProductCategories" EntitySet="ProductCategories" />
+            <End Role="ProductSubCategories" EntitySet="ProductSubCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductSubCategories" Association="Self.FK_Products_ProductSubCategories">
+            <End Role="ProductSubCategories" EntitySet="ProductSubCategories" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OnlineStoreModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="OnlineStoreModel.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsActivated" ColumnName="IsActivated" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="LastUpdatedAt" ColumnName="LastUpdatedAt" />
+                <ScalarProperty Name="LastUpdatedByUserId" ColumnName="LastUpdatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="OnlineStoreModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Subtitle" ColumnName="Subtitle" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AdditionInfo" ColumnName="AdditionInfo" />
+                <ScalarProperty Name="FinePrintInfo" ColumnName="FinePrintInfo" />
+                <ScalarProperty Name="ProductCategoryId" ColumnName="ProductCategoryId" />
+                <ScalarProperty Name="ProductSubCategoryId" ColumnName="ProductSubCategoryId" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="DiscountedPrice" ColumnName="DiscountedPrice" />
+                <ScalarProperty Name="DiscountRate" ColumnName="DiscountRate" />
+                <ScalarProperty Name="AvailableQuantity" ColumnName="AvailableQuantity" />
+                <ScalarProperty Name="IsActivated" ColumnName="IsActivated" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="LastUpdatedAt" ColumnName="LastUpdatedAt" />
+                <ScalarProperty Name="LastUpdatedByUser" ColumnName="LastUpdatedByUser" />
+                <ScalarProperty Name="TotalBought" ColumnName="TotalBought" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="IsPublished" ColumnName="IsPublished" />
+                <ScalarProperty Name="ImageFolderUrl" ColumnName="ImageFolderUrl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSubCategories">
+            <EntityTypeMapping TypeName="OnlineStoreModel.ProductSubCategory">
+              <MappingFragment StoreEntitySet="ProductSubCategories">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="IsActivated" ColumnName="IsActivated" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="LastUpdatedAt" ColumnName="LastUpdatedAt" />
+                <ScalarProperty Name="LastUpdatedByUserId" ColumnName="LastUpdatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
